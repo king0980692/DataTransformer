@@ -1,0 +1,32 @@
+{
+    "train": {
+        "input": "./ml.csv",
+        "output": "./train.txt",
+        "cached": true,
+        "seperator": ",",
+        "header": true,
+        "sparse": true,
+        "target_columns": [
+            {
+                "index": 0,
+                "type": "cat"
+            },
+            {
+                "index": 1,
+                "type": "cat"
+            },
+            {
+                "index": 2,
+                "type": "truth"
+            }
+        ]
+    },
+    "test": {
+        "input": "./dataset.csv",
+        "output": "./test.txt",
+        "cached": true,
+        "seperator": ",",
+        "header": true,
+        "target_columns": []
+    }
+}
