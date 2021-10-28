@@ -137,7 +137,7 @@ def get_config():
     config = args.config
 
     # if no argument pass in
-    if args.input and args.config == None:
+    if args.input == None and args.config == None:
         config = conf_wiz()
     
         

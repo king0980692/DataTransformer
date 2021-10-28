@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "encoderder"
+version = "0.1.0"
+description = "encode csv like file to sparse format"
+authors = ["Leon <king0980692@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.6"
+tqdm = "^4.62.3"
+numpy = "^1.21.3"
+scipy = "^1.7.1"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
