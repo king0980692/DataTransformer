@@ -12,10 +12,14 @@ def conf_wiz():
 
 
     train_inFile = input("Enter the train input file     : ")
+    #train_inFile = "./data/ml-100k/ua.base"
+
+
     train_sep = input("Enter the train input file sep    : ")
 
     if train_sep == '\\t':
-        train_sep == '\t'
+        train_sep = '\t'
+
 
     train_cached = input("Using cached  ?  : [y/n] ")
     train_cached = True if train_cached == 'y' else False
@@ -28,14 +32,14 @@ def conf_wiz():
 
 
     with open(train_inFile, 'r') as f:
-        line = f.readline()
+        line = f.readline().rstrip()
         target_line = []
         print(f"\n\nThis is the first row of input file \n{line}")
         for idx, l in enumerate(line.split(train_sep)):
             keep = input(f"keep col-{idx}: \n\n\t{l} ? : [y/n] ")
             keep = False if keep == "n" else True
             if keep:
-                col_type = input(f"\n\tcol type ? : [category,numeric,truth] ")
+                col_type = input(f"\n\tcol type ? : [cat, num,truth] ")
                 target_line.append({"index": idx, "type": col_type})
 
     print("\n")
@@ -47,6 +51,7 @@ def conf_wiz():
         "cached": train_cached,
         "seperator": train_sep,
         "header": train_header,
+        "sparse": train_sparse,
         "target_columns": target_line
     }
 
@@ -91,13 +96,14 @@ def conf_wiz():
 
     config = {"train": train_config, "test": test_config}
 
-    config = json.dumps(config, indent=4)
-    
-    print(config)
+    config_json = json.dumps(config, indent=4)
+
+    print(config_json)
 
     config_path = input("Enter the config store path   : ")
+
     with open(config_path, "w") as f:
-        f.write(config)
+        f.write(config_json)
 
     return config
 
@@ -116,7 +122,7 @@ def get_config():
                         help='Specifiy the seperator to split column')
     parser.add_argument('-b',
                         '--sparse',
-                        help='Using coo matrix as output format')                        
+                        help='Using coo matrix as output format')
     parser.add_argument('-hh',
                         '--header',
                         default=True,
@@ -139,13 +145,16 @@ def get_config():
     # if no argument pass in
     if args.input == None and args.config == None:
         config = conf_wiz()
-    
-        
+
+        train_config, test_config = progress.config_parser(config)
+        return train_config, test_config
+
+
+
 
     if config:
         with open(args.config, 'r') as f:
             config = json.load(f)
-
             train_config, test_config = progress.config_parser(config)
             return train_config, test_config
     else:
@@ -186,12 +195,14 @@ def run():
 
     train_config, test_config = get_config()
     check_config(train_config)
-    #check_config(test_config)
+    check_config(test_config)
+
     # gen train
     all_encoder = progress.pure_readlines(train_config)
+
     # gen test
-    # encode.gen_output_file(test_config, all_encoder,truth_line=False)
-    #encode.gen_all_pairs(test_config, all_encoder, based_on=1)
+    progress.pure_readlines(test_config)
+    progress.gen_all_pairs(test_config, all_encoder)
 
 
 if __name__ == '__main__':
