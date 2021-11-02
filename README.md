@@ -12,7 +12,7 @@ Factorization machine using the libsvm for input, and for experiment more conven
 
 As you can see the FM's input for user and item using the One-Hot encode to generate a huge sparse matrix . The scikit-learn [OneHotEncoder](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html) can't afford this kind task.
 
-Furthermore, we also want to add the short-text feature or other auxiliary feature into FM, and those feature can be all kinds of type, e.g. categorical data, numerical data, we want to encode them all, so develope this kind tool is necessary !
+Furthermore, we also want to add the short-text feature or other auxiliary feature into FM, and those feature can be all kinds of type, e.g. categorical data, numerical data, we want to encode them all, so develope this tool is necessary !
 
 
 ## Usage
