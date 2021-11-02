@@ -62,6 +62,7 @@ encoderder support json config format, which look like :
 * target column : the intersted column you want to encode, support some kinds of feature type
     * cat : (categorical data)
     * num : (numerical data)
+    * truth : (labled data)
 
 ##### OTHER CONFIG
 * cache : turn it on to will cached some data in memory, which cost more memory
